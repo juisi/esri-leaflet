@@ -35,6 +35,8 @@ export var FeatureLayer = FeatureManager.extend({
   },
 
   createNewLayer: function (geojson) {
+    console.log('FeatureLayer createNewLayer geojson ', JSON.stringify(geojson));
+    console.log('FeatureLayer createNewLayer options ', this.options);
     var layer = GeoJSON.geometryToLayer(geojson, this.options);
     // trap for GeoJSON without geometry
     if (layer) {
