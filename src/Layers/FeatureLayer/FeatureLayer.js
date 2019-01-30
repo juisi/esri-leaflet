@@ -85,10 +85,12 @@ export var FeatureLayer = FeatureManager.extend({
    */
 
   createLayers: function (features) {
+    console.log('createLayers features:', features);
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
 
       var layer = this._layers[geojson.id];
+      console.log('createLayers layers:', layer);
       var newLayer;
 
       if (this._visibleZoom() && layer && !this._map.hasLayer(layer)) {
