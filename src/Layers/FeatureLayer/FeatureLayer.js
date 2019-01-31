@@ -55,8 +55,10 @@ export var FeatureLayer = FeatureManager.extend({
     if (geojson.properties) {
       layer.feature.properties = geojson.properties;
     }
-    if (!geojson.geometry) {
+    if (!geojson.geometry.type) {
+      console.log('Esri-FeatureLayer: missing geojson geometry object ');
       geojson.geometry = {'type': 'Polygon', 'coordinates': [[[31.465492, 62.975368], [31.56863, 62.918721], [31.516295, 62.977954], [31.465492, 62.975368]]]};
+      console.log('Esri-FeatureLayer:add static values: ', geojson.geometry);
     }
     switch (geojson.geometry.type) {
       case 'Point':
