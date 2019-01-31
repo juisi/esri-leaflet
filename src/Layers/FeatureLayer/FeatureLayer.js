@@ -55,7 +55,9 @@ export var FeatureLayer = FeatureManager.extend({
     if (geojson.properties) {
       layer.feature.properties = geojson.properties;
     }
-
+    if (!geojson.geometry) {
+      geojson.geometry = {'type': 'Polygon', 'coordinates': [[[31.465492, 62.975368], [31.56863, 62.918721], [31.516295, 62.977954], [31.465492, 62.975368]]]};
+    }
     switch (geojson.geometry.type) {
       case 'Point':
         latlngs = GeoJSON.coordsToLatLng(geojson.geometry.coordinates);
@@ -77,6 +79,11 @@ export var FeatureLayer = FeatureManager.extend({
         latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
+      /* default:
+        geojson.geometry = {'type': 'Polygon', 'coordinates': [[[31.465492, 62.975368], [31.56863, 62.918721], [31.516295, 62.977954], [31.465492, 62.975368]]]};
+        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
+        layer.setLatLngs(latlngs);
+        break; */
     }
   },
 
