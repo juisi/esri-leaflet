@@ -35,13 +35,10 @@ export var FeatureLayer = FeatureManager.extend({
   },
 
   createNewLayer: function (geojson) {
+    // TODO: fix dirty hack
     if (geojson.geometry === null) {
-      console.log('Esri-FeatureLayer: missing geojson geometry object ');
       geojson.geometry = {'type': 'Polygon', 'coordinates': [[[31.465492, 62.975368], [31.56863, 62.918721], [31.516295, 62.977954], [31.465492, 62.975368]]]};
-      console.log('Esri-FeatureLayer:add static values: ', geojson.geometry);
     }
-    console.log('FeatureLayer createNewLayer geojson ', JSON.stringify(geojson));
-    console.log('FeatureLayer createNewLayer options ', this.options);
     var layer = GeoJSON.geometryToLayer(geojson, this.options);
     // trap for GeoJSON without geometry
     if (layer) {
@@ -60,10 +57,9 @@ export var FeatureLayer = FeatureManager.extend({
     if (geojson.properties) {
       layer.feature.properties = geojson.properties;
     }
+    // TODO: fix dirty hack
     if (geojson.geometry === null) {
-      console.log('Esri-FeatureLayer: missing geojson geometry object ');
       geojson.geometry = {'type': 'Polygon', 'coordinates': [[[31.465492, 62.975368], [31.56863, 62.918721], [31.516295, 62.977954], [31.465492, 62.975368]]]};
-      console.log('Esri-FeatureLayer:add static values: ', geojson.geometry);
     }
     switch (geojson.geometry.type) {
       case 'Point':
@@ -86,11 +82,6 @@ export var FeatureLayer = FeatureManager.extend({
         latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
         layer.setLatLngs(latlngs);
         break;
-      /* default:
-        geojson.geometry = {'type': 'Polygon', 'coordinates': [[[31.465492, 62.975368], [31.56863, 62.918721], [31.516295, 62.977954], [31.465492, 62.975368]]]};
-        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
-        layer.setLatLngs(latlngs);
-        break; */
     }
   },
 
@@ -99,12 +90,10 @@ export var FeatureLayer = FeatureManager.extend({
    */
 
   createLayers: function (features) {
-    console.log('createLayers features:', features);
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
 
       var layer = this._layers[geojson.id];
-      console.log('createLayers layers:', layer);
       var newLayer;
 
       if (this._visibleZoom() && layer && !this._map.hasLayer(layer)) {

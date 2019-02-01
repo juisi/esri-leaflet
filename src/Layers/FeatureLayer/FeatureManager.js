@@ -79,7 +79,6 @@ export var FeatureManager = VirtualGrid.extend({
 
         // Unless we've been told otherwise, check to see whether service can emit GeoJSON natively
         if (!forceJsonFormat && supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
-          console.log('FeatureManager onAdd: service can emit GeoJSON');
           this.service.options.isModern = true;
         }
 
@@ -190,8 +189,6 @@ export var FeatureManager = VirtualGrid.extend({
         this._cache[key].push(id);
       }
     }
-    console.log('FeatureManager addFeatures: ', features);
-    console.log('FeatureManager addFeatures coords: ', coords);
     if (this.options.timeField) {
       this._buildTimeIndexes(features);
     }
@@ -329,7 +326,6 @@ export var FeatureManager = VirtualGrid.extend({
     if (this.redraw) {
       this.once('load', function () {
         this.eachFeature(function (layer) {
-          console.log('FeatureManager refresh: layer ', layer);
           this._redraw(layer.feature.id);
         }, this);
       }, this);
@@ -376,7 +372,6 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   _buildTimeIndexes: function (geojson) {
-    console.log('FeatureManager geojson: ', geojson);
     var i;
     var feature;
     if (this.options.timeField.start && this.options.timeField.end) {
@@ -496,7 +491,6 @@ export var FeatureManager = VirtualGrid.extend({
   },
 
   addFeatures: function (features, callback, context) {
-    console.log('FeatureManager features: ', features);
     this._getMetadata(Util.bind(function (error, metadata) {
       if (error) {
         if (callback) { callback.call(this, error, null); }
